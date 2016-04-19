@@ -2,21 +2,23 @@ var Botkit = require('./lib/Botkit.js');
 var mailer = require("nodemailer");
 var smtpTransport = require("nodemailer-smtp-transport");
 
-var issues = {
-    1: 'Hardware',
-    2: 'Software',
-    3: 'Mobile Devices',
-    4: 'Email',
-    5: 'Virtual Lab',
-    6: 'Physical Labs',
-    7: 'Audio Visual',
-    8: 'Server',
-    9: 'Networking',
-    10: 'Building Infrastructure',
-    11: 'Other',
-    12: 'Web',
-    13: 'Spam'
-};
+var issues = [
+    'Hardware',
+    'Software',
+    'Mobile Devices',
+    'Email',
+    'Virtual Lab',
+    'Physical Labs',
+    'Audio Visual',
+    'Server',
+    'Networking',
+    'Building Infrastructure',
+    'Other',
+    'Web',
+    'Spam'
+].map(function(obj, index) { 
+    return "[" + (index + 1) + "] " + obj;
+} );
 
 var serverAddress = "mail.company.com"
 var emailAddress = "footprints@email.com"
@@ -81,11 +83,7 @@ askSubject = function(response, convo) {
 askIssue = function(response, convo) {
 var issueString = ""
 convo.say("Please ENTER THE NUMBER for the issue this relates to")
-
-for(var index in issues){
-issueString = issueString.concat("["+index+"] "+ issues[index]+"\n")
-}
-    convo.ask(issueString, function(response, convo) {
+    convo.ask(issues.join("\n"), function(response, convo) {
 	if (parseInt(response.text) < 14) {
             controller.storage.users.get(response.user, function(err, user_data) {
                 user_data.issue = issues[response.text];
