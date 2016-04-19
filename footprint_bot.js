@@ -83,9 +83,9 @@ askSubject = function(response, convo) {
 askIssue = function(response, convo) {
 convo.say("Please ENTER THE NUMBER for the issue this relates to")
     convo.ask(issues.join("\n"), function(response, convo) {
-	if (parseInt(response.text) < 14) {
+	if (parseInt(response.text) > 0 && parseInt(response.text) <= issues.length) {
             controller.storage.users.get(response.user, function(err, user_data) {
-                user_data.issue = issues[response.text];
+                user_data.issue = issues[enteredIssueNumber - 1];
                 controller.storage.users.save(user_data, function(err) {
                     askDescription(response, convo)
                     convo.next();
