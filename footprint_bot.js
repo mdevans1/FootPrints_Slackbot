@@ -18,7 +18,6 @@ var issues = {
     13: 'Spam'
 };
 
-var issueString = ''
 var serverAddress = "mail.company.com"
 var emailAddress = "footprints@email.com"
 var slackToken = "123456789"
@@ -80,12 +79,14 @@ askSubject = function(response, convo) {
 }
 
 askIssue = function(response, convo) {
-    convo.say("Please ENTER THE NUMBER for the issue this relates to")
-buildIssues(function(issueString){
-	    convo.ask(issueString, function(response, convo) {
-/*	convo.ask("[1] Hardware\n[2] Software\n[3] Mobile Devices\n[4] Email\n[5] Virtual Lab\n[6] Physical Labs\n[7] Audio Visual\n[8] Server\n[9] Networking\n[10] Building Infrastructure\n[11] Other\n[12] Web\n[13] Spam", function(response, convo) {
-*/
-if (parseInt(response.text) < 14) {
+var issueString = ""
+convo.say("Please ENTER THE NUMBER for the issue this relates to")
+
+for(var index in issues){
+issueString = issueString.concat("["+index+"] "+ issues[index]+"\n")
+}
+    convo.ask(issueString, function(response, convo) {
+	if (parseInt(response.text) < 14) {
             controller.storage.users.get(response.user, function(err, user_data) {
                 user_data.issue = issues[response.text];
                 controller.storage.users.save(user_data, function(err) {
@@ -98,8 +99,6 @@ if (parseInt(response.text) < 14) {
             convo.next();
         }
     });
-});
-
 }
 
 askDescription = function(response, convo) {
@@ -116,7 +115,6 @@ askDescription = function(response, convo) {
 
 submitIssue = function(response, convo) {
     controller.storage.users.get(response.user, function(err, user_data) {
-        console.log("Submit Issue Description: " + user_data.description);
         convo.say("Name: " + user_data.first + " " + user_data.last)
         convo.say("Email: " + user_data.email)
         convo.say("Subject: " + user_data.subject)
@@ -160,10 +158,3 @@ email = function(err, user_data) {
     });
 }
 
-buildIssues = function(callback)
-{
-for(var index in issues){
-issueString = issueString.concat("["+index+"] "+ issues[index]+"\n")
-}
-callback(issueString)
-}
