@@ -81,7 +81,6 @@ askSubject = function(response, convo) {
 }
 
 askIssue = function(response, convo) {
-var issueString = ""
 convo.say("Please ENTER THE NUMBER for the issue this relates to")
     convo.ask(issues.join("\n"), function(response, convo) {
 	if (parseInt(response.text) < 14) {
