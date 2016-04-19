@@ -19,22 +19,21 @@ npm install nodemailer-smtp-transport
 ```
 //Set Selectable Issue Types
 var issues = {
-    1: 'Hardware',
-    2: 'Software',
-    3: 'Mobile Devices',
-    4: 'Email',
-    5: 'Virtual Lab',
-    6: 'Physical Labs',
-    7: 'Audio Visual',
-    8: 'Server',
-    9: 'Networking',
-    10: 'Building Infrastructure',
-    11: 'Other',
-    12: 'Web',
-    13: 'Spam'
+   'Hardware',
+   'Software',
+   'Mobile Devices',
+   'Email',
+   'Virtual Lab',
+   'Physical Labs',
+   'Audio Visual',
+   'Server',
+   'Networking',
+   'Building Infrastructure',
+   'Other',
+   'Web',
+   'Spam'
 };
 
-var issueString = ''
 
 //Set SMTP server and footprints email address
 var serverAddress = "mail.company.com"
